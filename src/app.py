@@ -848,13 +848,14 @@ def protected():
 
     #VALIDAR si el token existe como bloqueado, con una función previamente definiada.
     token = verificacionToken(get_jwt())
+    print(token)
 
     if token:
-        raise APIException({"message":"Inicia sesión para ir a esta rura protegida"})    
+        raise APIException({"message":"Inicia sesión para ir a esta rura protegida"}, status_code=404)    
 
     print("El usuario actual es: ", user.first_name)
-    print("El usuario actual es: ", current_user)
-    return jsonify({"message":"Estas en una ruta protegida"}), 200
+    # print("El usuario actual es: ", current_user)
+    return jsonify({"message":"Estas en una ruta protegida", "first_name":user.first_name}), 200
 
 #11 - LOGOUT DEL USUARIO.
 @app.route("/logout", methods=["POST"])
